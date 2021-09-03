@@ -1,3 +1,3 @@
 # FastAPI Data Engineering and Contiuous Delivery
 
-scraping utah election result urls
+scraping Utah election results urls

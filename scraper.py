@@ -3,7 +3,7 @@ import pandas as pd
 import requests
 import re
 import io
-
+import numpy as np
 
 URL = "https://voteinfo.utah.gov/historical-election-results/"
 page = requests.get(URL)
@@ -23,7 +23,6 @@ def extract_url(html):
 
 def build_election_list(html):
     url_list = extract_url(html)
-    print(url_list)
     pattern = r"(?<!Default\/)(?<=\/)\d{4}[-|\%20]*?[^\d]*?(?:General|Primar|Gen|Pri)"
     election_list = list(map(lambda url: re.findall(pattern,url)[0],url_list))
     pattern2 = r"\d{4}|[A-Za-z]+"
@@ -52,3 +51,25 @@ def make_url_dict(html):
 # r = requests.get(url)
 # f = io.BytesIO(r.content)
 # reader = PyPDF2.pdf.PdfFileReader(f)
+
+url = "https://voteinfo.utah.gov/wp-content/uploads/sites/42/2021/02/2020-General-Election-Statewide-Canvass.xlsx"
+url2= "https://voteinfo.utah.gov/wp-content/uploads/sites/42/2021/02/2020-Primary-Election-State-Canvass.xlsx"
+
+
+def get_juidicial(url):
+    try:
+        df = pd.read_excel(url,sheet_name="Judicial") 
+        candidate_position = df.columns[1::2]
+        df = list(map(lambda s:match(s),candidate_position))
+        df = np.array(df)
+        name = df[:,0]
+        position = df[:,1]
+        
+        return (pd.DataFrame({'Candidate':name,'Office':position}))
+        
+    except:
+         return ("No judicial offices were elected in this election")
+        
+def match(name_position):
+    match = re.split(r'\s{5,}', name_position)
+    return match

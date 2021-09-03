@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 import pandas as pd
 import requests
-from scraper import build_election_list, extract_url,make_url_dict
+from scraper import build_election_list, extract_url,make_url_dict,match,get_juidicial
 
 import uvicorn
 
@@ -17,9 +17,9 @@ html = page.text
 @app.get("/")
 async def root():
     return {"message": [{
-        "What this does":"Retrive available Utah state election results in xlsx form from https://voteinfo.utah.gov/historical-election-results/",
+        "What this does":"Retrive first 10 available Utah state election results in xlsx form from https://voteinfo.utah.gov/historical-election-results/",
         "List": "root_url/list will list all the available election data on the offcial webste", 
-        "How": "after root url type '/get/election_name',e.g. '/2020 General'. Find acceptable election_name on root_url/list"}]
+        "How": "after root url type '/get/election_name',e.g. '/2020 General Election'. Find acceptable election_name on root_url/list"}]
     }
     
 @app.get("/list")
@@ -30,10 +30,15 @@ async def list():
 @app.get("/get/{election_name}")
 async def get(election_name) :
     url_df = make_url_dict(html)
-    url = url_df.loc[url_df['election']==election_name]['url'] 
+    url_df = url_df.iloc[:10]
+    url = url_df.loc[url_df['election']==election_name]['url'].values[0] 
+    candidate_position_df = get_juidicial(url)
+    
     return {"result":[{
-        "election": election_name,
-        "url": url}]
+        "Election Name": election_name,
+        "Url": url,
+        "Judicial Election Results": candidate_position_df
+    }]
     }
     
 

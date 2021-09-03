@@ -7,4 +7,5 @@ pandas
 requests
 PyPDF2
 urllib3
+openpyxl
 uvicorn[standard]

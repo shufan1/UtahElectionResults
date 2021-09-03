@@ -17,12 +17,12 @@ html = page.text
 async def root():
     return {"message": [{
         "What this does":"Retrive first 10 available Utah state election results in xlsx form from https://voteinfo.utah.gov/historical-election-results/",
-        "List": "root_url/list will list all the available election data on the offcial webste", 
-        "How": "after root url type '/get/election_name',e.g. '/2020 General Election'. Find acceptable election_name on root_url/list"}]
+        "List": "root_url/list_election will list all the available election data on the offcial webste", 
+        "How": "after root url type '/get/election_name',e.g. '/2020 General Election'. Find acceptable election_name on root_url/list_election"}]
     }
     
-@app.get("/list")
-async def list():
+@app.get("/list_election")
+async def list_election():
     election_list = build_election_list(html)
     return {"Election Results List": election_list}
         

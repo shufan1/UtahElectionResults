@@ -1,5 +1,4 @@
 from fastapi import FastAPI
-import pandas as pd
 import requests
 from scraper import build_election_list,make_url_dict,get_juidicial
 

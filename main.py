@@ -23,8 +23,8 @@ async def root():
     
 @app.get("/list")
 async def list():
-    list = build_election_list(html)
-    return {"Election Results List": list}
+    election_list = build_election_list(html)
+    return {"Election Results List": election_list}
         
 @app.get("/get/{election_name}")
 async def get(election_name) :

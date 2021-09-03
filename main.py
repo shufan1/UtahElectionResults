@@ -16,6 +16,7 @@ html = page.text
 @app.get("/")
 async def root():
     return {"message": [{
+        "Greeting": "Welcome",
         "What this does":"Retrive first 10 available Utah state election results in xlsx form from https://voteinfo.utah.gov/historical-election-results/",
         "List": "root_url/list_election will list all the available election data on the offcial webste", 
         "How": "after root url type '/get/election_name',e.g. '/2020 General Election'. Find acceptable election_name on root_url/list_election"}]

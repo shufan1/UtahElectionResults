@@ -19,6 +19,3 @@ jobs:
     - name: Format Code
       run: |
         make format
-    - name: Run uvicorn
-      run: |
-        make run-uvicorn

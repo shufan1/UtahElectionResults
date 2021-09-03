@@ -8,4 +8,5 @@ requests
 PyPDF2
 urllib3
 openpyxl
+xlrd
 uvicorn[standard]

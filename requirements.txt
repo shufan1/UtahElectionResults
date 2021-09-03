@@ -2,4 +2,9 @@ pytest
 pylint
 black
 fastapi
+beautifulsoup4
+pandas
+requests
+PyPDF2
+urllib3
 uvicorn[standard]
